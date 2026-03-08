@@ -1,14 +1,14 @@
+import pymysql
+pymysql.install_as_MySQLdb()
+
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
-
 from app.config import Config
 from app.extensions import db, mail, bcrypt, migrate
 
-
 def create_app():
-
     app = Flask(__name__)
 
     # Chargement de la configuration
@@ -16,20 +16,19 @@ def create_app():
 
     # Configuration JWT (sécurité)
     app.config["JWT_TOKEN_LOCATION"] = ["headers"]
+    app.config["JWT_HEADER_NAME"] = "Authorization"
+    app.config["JWT_HEADER_TYPE"] = "Bearer"
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
     app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=7)
 
-    # CORS (autoriser le frontend React)
+    # CORS — autoriser le frontend React (Vite sur 5173)
     CORS(
         app,
-        resources={
-            r"/*": {
-                "origins": ["http://localhost:5173"],
-                "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-                "allow_headers": ["Content-Type", "Authorization"]
-            }
-        },
-        supports_credentials=True
+        origins=["http://localhost:5173", "http://localhost:3000"],
+        methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "Authorization"],
+        supports_credentials=True,
+        vary_header=True
     )
 
     # Initialisation JWT
