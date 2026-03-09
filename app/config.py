@@ -8,10 +8,14 @@ class Config:
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt_super_secret_key_NYOTA")
 
     # Configuration Base de données — MySQL via phpMyAdmin
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL",
-        "mysql+pymysql://root:@localhost:3306/nyota"
-    )
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+
+    if SQLALCHEMY_DATABASE_URI and SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace(
+            "postgres://", "postgresql://", 1
+        )
+
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Configuration Emails (Resend ou SMTP Gmail)
