@@ -2,10 +2,10 @@ import os
 
 class Config:
     # Clé secrète pour Flask (sessions, etc.)
-    SECRET_KEY = os.getenv("SECRET_KEY", "dev_secret_key_NYOTA_2026")
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
     # Configuration JWT
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt_super_secret_key_NYOTA")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
     # Configuration Base de données — MySQL via phpMyAdmin
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
@@ -24,6 +24,6 @@ class Config:
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME", "tonemail@gmail.com")
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "onzb xnat ifew svwc")
-    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER", "tonemail@gmail.com")
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
